@@ -5,14 +5,14 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class ContactController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/contact", name="contact_index_page")
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig', [
+        return $this->render('contact/index.html.twig', [
 
         ]);
     }

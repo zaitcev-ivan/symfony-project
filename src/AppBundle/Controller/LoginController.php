@@ -5,14 +5,14 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class LoginController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/login", name="login_index_page")
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig', [
+        return $this->render('login/index.html.twig', [
 
         ]);
     }
