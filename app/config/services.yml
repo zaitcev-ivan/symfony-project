@@ -42,3 +42,6 @@ services:
       autowire: true
       tags:
         - { name: doctrine.event_subscriber }
+    AppBundle\EventListener\SidebarMenuEventListener:
+            tags:
+                - { name: kernel.event_listener, event: sbs.admin_lte.sidebar_menu, method: onShowMenu }

@@ -1,0 +1,5 @@
+/bundles/
+/components/
+/css/admin-lte-bundle*.css
+/css/*.map
+/js/admin-lte-bundle*.js

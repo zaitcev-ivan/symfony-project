@@ -1,3 +1,5 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+sbs_adminlte:
+    resource: "@SbSAdminLTEBundle/Resources/config/routing.xml"
