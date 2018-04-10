@@ -90,7 +90,11 @@
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="{{ path('login_index_page') }}"><i class="fa fa-lock"></i> Login</a></li>
+                            {% if is_granted('ROLE_USER') %}
+                                <li><a href="{{ path('security_logout') }}"><i class="fa fa-lock"></i> Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ path('login_index_page') }}"><i class="fa fa-lock"></i> Login</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
