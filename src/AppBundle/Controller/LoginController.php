@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Form\LoginForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Form\UserRegistrationForm;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,10 +26,12 @@ class LoginController extends Controller
             '_username' => $lastUsername,
         ]);
 
+        $registrationForm = $this->createForm(UserRegistrationForm::class);
 
         return $this->render('login/index.html.twig', [
             'loginForm' => $loginForm->createView(),
-            'error'         => $error,
+            'registrationForm' => $registrationForm->createView(),
+            'error' => $error,
         ]);
     }
 
