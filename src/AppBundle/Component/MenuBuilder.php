@@ -10,7 +10,7 @@ class MenuBuilder {
     public function getMenu() {
 
         // Menu Label
-        $label_main = new MenuItemModel('MAIN NAVIGATION');
+        $label_main = new MenuItemModel('Панель управления');
 
         // One Level Menu
         $item_info = (new MenuItemModel('Information'))
@@ -18,6 +18,10 @@ class MenuBuilder {
             ->setIcon('fa fa-circle-o text-blue')
             ->addBadge('17', MenuItemInterface::COLOR_RED)
             ->addBadge('new');
+
+        $user_info = (new MenuItemModel('Пользователи'))
+            ->setRoute('admin_user_list')
+            ->setIcon('fa fa-circle-o text-blue');
 
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
@@ -38,8 +42,9 @@ class MenuBuilder {
 
         return [
             $label_main,
-            $item_multilevel,
-            $item_info
+            $user_info,
+            //$item_multilevel,
+            //$item_info
         ];
     }
 }
