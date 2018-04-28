@@ -17,6 +17,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface
 {
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -49,6 +54,10 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     /**
      * @ORM\Column(type="json_array")
@@ -118,5 +127,21 @@ class User implements UserInterface
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }

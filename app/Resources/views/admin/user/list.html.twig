@@ -13,7 +13,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        <th>Created</th>
+                        <th>Roles</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,7 @@
                             {{ user.id }}
                         </td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
                         <td>{{ user.roles | join(', ') }}</td>
                     </tr>
                 {% endfor %}
