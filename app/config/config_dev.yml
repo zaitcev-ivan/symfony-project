@@ -43,3 +43,9 @@ monolog:
 # Assetic Configuration
 assetic:
     use_controller: false
+
+swiftmailer:
+    disable_delivery: true
+    spool:
+            type: file
+            path: '%kernel.logs_dir%/swiftmailer/'

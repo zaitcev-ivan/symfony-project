@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block container %}
+    {% block body %}
+        <section id="form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-1">
+                        <div class="login-form">
+                            <h2>Укажите email для восстановления пароля</h2>
+                            {{ form_start(passwordResetForm) }}
+                                {{ form_row(passwordResetForm.email) }}
+                                <button type="submit" class="btn btn-default" formnovalidate>Отправить</button>
+                            {{ form_end(passwordResetForm) }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+{% endblock %}

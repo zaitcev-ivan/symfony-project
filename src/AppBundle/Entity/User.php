@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Faker\Provider\Uuid;
 
 /**
  * @ORM\Entity
@@ -63,6 +64,16 @@ class User implements UserInterface
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
+
+    /**
+     * @ORM\Column(name="reset_token", type="string", length=32, nullable=true)
+     */
+    private $resetToken;
+
+    /**
+     * @ORM\Column(name="reset_token_expires_at", type="integer", nullable=true)
+     */
+    private $resetTokenExpiresAt;
 
     public function getUsername()
     {
@@ -144,4 +155,55 @@ class User implements UserInterface
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @param \DateInterval $interval
+     * @return string
+     */
+    public function generateResetToken(\DateInterval $interval): string
+    {
+        $now = new \DateTime();
+        $this->resetToken = Uuid::uuid();
+        $this->resetTokenExpiresAt = $now->add($interval)->getTimestamp();
+        return $this->resetToken;
+    }
+
+    public function clearResetToken()
+    {
+        $this->resetToken = null;
+        $this->resetTokenExpiresAt = null;
+    }
+
+    public function isResetTokenValid(string $token): bool
+    {
+        return
+            $this->resetToken === $token &&
+            $this->resetTokenExpiresAt !== null &&
+            $this->resetTokenExpiresAt > time();
+    }
+
+    /**
+     *
+     * @param $password
+     * @throws \DomainException
+     */
+    public function resetPassword($password)
+    {
+        if(empty($this->resetToken)) {
+            throw new \DomainException('Password resetting is not requested.');
+        }
+
+        $this->setPlainPassword($password);
+        $this->clearResetToken();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetToken()
+    {
+        return $this->resetToken;
+    }
+
 }

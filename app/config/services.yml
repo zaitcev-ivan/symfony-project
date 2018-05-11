@@ -45,3 +45,6 @@ services:
     AppBundle\EventListener\SidebarMenuEventListener:
             tags:
                 - { name: kernel.event_listener, event: sbs.admin_lte.sidebar_menu, method: onShowMenu }
+    AppBundle\EventListener\PasswordResetRequestSubscriber:
+      arguments:
+        $sender: '%app.notifications.email_sender%'

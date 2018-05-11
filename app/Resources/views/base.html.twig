@@ -146,6 +146,13 @@
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}" style="width: 1145px; margin: 0 auto;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
 {% block container %}
 <section id="slider"><!--slider-->
     <div class="container">
