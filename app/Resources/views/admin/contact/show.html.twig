@@ -1,0 +1,33 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Сообщение из формы обратной связи</h3>
+        </div>
+        <div class="box-body">
+            <dl class="dl-vertical">
+                <dt>Имя пользователя</dt>
+                <dd>{{ contact.name }}</dd>
+                <dt>Email</dt>
+                <dd>{{ contact.email }}</dd>
+                <dt>Дата создания</dt>
+                <dd>{{ contact.createdAt|date('Y-m-d H:i:s') }}</dd>
+                <dt>Тема сообщения</dt>
+                <dd>{{ contact.subject }}</dd>
+                <dt>Текст сообщения</dt>
+                <dd>{{ contact.message }}</dd>
+                <dt>Статус</dt>
+                <dd>{{ include('admin/contact/_status.html.twig', {contact : contact}, with_context = false) }}</dd>
+                <dt>Действия</dt>
+                <dd>
+                    {{ include('admin/contact/_mark_old_form.html.twig', {contact : contact}, with_context = false) }}
+                    {{ include('admin/contact/_delete_form.html.twig', {contact : contact}, with_context = false) }}
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+{% endblock %}

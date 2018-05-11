@@ -1,0 +1,5 @@
+{% if contact.isNew %}
+    <span class="label label-success">Новый</span>
+{% elseif contact.isOld  %}
+    <span class="label label-default">Просмотрен</span>
+{% endif  %}

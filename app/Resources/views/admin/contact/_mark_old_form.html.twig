@@ -1,0 +1,7 @@
+<form action="{{ url('admin_contact_mark_old', {id: contact.id}) }}" method="post" id="delete-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('mark_old') }}" />
+    <button type="submit" class="btn btn-xs btn-primary">
+        <i class="fa fa-eye" aria-hidden="true"></i>
+        &nbsp;Отметить просмотренным
+    </button>
+</form>

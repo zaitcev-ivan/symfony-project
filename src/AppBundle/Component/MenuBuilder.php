@@ -23,6 +23,10 @@ class MenuBuilder {
             ->setRoute('admin_user_list')
             ->setIcon('fa fa-circle-o text-blue');
 
+        $contact_info = (new MenuItemModel('Обратная связь'))
+            ->setRoute('admin_contact_list')
+            ->setIcon('fa fa-circle-o text-blue');
+
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
             ->setIcon('fa fa-share')
@@ -43,6 +47,7 @@ class MenuBuilder {
         return [
             $label_main,
             $user_info,
+            $contact_info,
             //$item_multilevel,
             //$item_info
         ];
