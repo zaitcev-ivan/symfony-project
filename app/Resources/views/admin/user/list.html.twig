@@ -25,7 +25,7 @@
                         </td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
-                        <td>{{ user.roles | join(', ') }}</td>
+                        <td>{{ include('admin/user/_roles.html.twig', {user : user}, with_context = false) }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

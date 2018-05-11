@@ -1,0 +1,7 @@
+{% for role in user.roles %}
+    {% if role == 'ROLE_USER' %}
+        <span class="label label-success">user</span>
+    {% elseif role == 'ROLE_ADMIN' %}
+        <span class="label label-danger">админ</span>
+    {% endif %}
+{% endfor %}
