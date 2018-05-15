@@ -1,0 +1,25 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Редактировать бренд</h3>
+        </div>
+        <div class="box-body">
+            {{ form_start(editForm) }}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName">Название</label>
+                    {{ form_widget(editForm.name, {'class' : 'form-control', 'id' : 'inputName'}) }}
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" formnovalidate>Изменить</button>
+            </div>
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+{% endblock %}

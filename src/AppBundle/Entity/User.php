@@ -66,7 +66,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(name="reset_token", type="string", length=32, nullable=true)
+     * @ORM\Column(name="reset_token", type="string", length=64, nullable=true)
      */
     private $resetToken;
 
