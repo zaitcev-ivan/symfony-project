@@ -1,0 +1,30 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Создать категорию</h3>
+        </div>
+        <div class="box-body">
+            {{ form_start(createForm) }}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName">Название</label>
+                    {{ form_widget(createForm.name, {'class' : 'form-control', 'id' : 'inputName'}) }}
+                    {{ form_errors(createForm.name) }}
+                </div>
+                <div class="form-group">
+                    <label for="inputParent">Родительская категория</label>
+                    {{ form_widget(createForm.parentId, {'class' : 'form-control', 'id' : 'inputParent'}) }}
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" formnovalidate>Создать</button>
+            </div>
+            {{ form_end(createForm) }}
+        </div>
+    </div>
+
+{% endblock %}

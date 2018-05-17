@@ -28,7 +28,7 @@ class MenuBuilder {
             ->setIcon('fa fa-circle-o text-blue');
 
         $brand_info = (new MenuItemModel('Бренды'))
-            ->setIcon('fa -fa-share')
+            ->setIcon('fa fa-share')
             ->addChild(
                 (new MenuItemModel('Список брендов'))->setRoute('admin_brand_list')
             )
@@ -36,6 +36,16 @@ class MenuBuilder {
                 (new MenuItemModel('Создать бренд'))->setRoute('admin_brand_create')
             )
         ;
+
+        $category_info = (new MenuItemModel('Категории'))
+            ->setIcon('fa fa-share')
+            ->addChild(
+                (new MenuItemModel('Список категорий'))->setRoute('admin_category_list')
+            )
+            ->addChild(
+                (new MenuItemModel('Создать категорию'))->setRoute('admin_category_create')
+            )
+            ;
 
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
@@ -59,6 +69,7 @@ class MenuBuilder {
             $user_info,
             $contact_info,
             $brand_info,
+            $category_info,
             //$item_multilevel,
             //$item_info
         ];

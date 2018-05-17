@@ -48,3 +48,7 @@ services:
     AppBundle\EventListener\PasswordResetRequestSubscriber:
       arguments:
         $sender: '%app.notifications.email_sender%'
+    gedmo.listener.tree:
+      class: Gedmo\Tree\TreeListener
+      tags:
+        - { name: doctrine.event_subscriber }

@@ -1,0 +1,4 @@
+<form action="{{ url('admin_category_move_up', {id: category.id}) }}" method="post" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('move-up') }}" />
+    <button type="submit" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+</form>
