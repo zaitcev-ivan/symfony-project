@@ -1,0 +1,51 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Характеристики</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 180px;">Название</th>
+                        <th style="width: 170px;">Тип</th>
+                        <th style="width: 180px;">По умолчанию</th>
+                        <th>Варианты</th>
+                        <th style="width: 50px;">Обязат.</th>
+                        <th style="width: 50px;">Сорт.</th>
+                        <th style="width: 250px;">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for characteristic in characteristicList %}
+                        <tr>
+                            <td>{{ characteristic.name }}</td>
+                            <td>{{ characteristic.typeName }}</td>
+                            <td>{{ characteristic.default }}</td>
+                            <td>
+                                {{ include('admin/characteristic/_variants.html.twig', {characteristic : characteristic}, with_context = false) }}
+                            </td>
+                            <td>
+                                {{ include('admin/characteristic/_required.html.twig', {characteristic : characteristic}, with_context = false) }}
+                            </td>
+                            <td>{{ characteristic.sort }}</td>
+                            <td>
+                                <a href="{{ path('admin_characteristic_edit', {id : characteristic.id}) }}" class="btn btn-xs btn-default">Редактировать</a>
+                                {{ include('admin/characteristic/_delete_form.html.twig', {characteristic : characteristic}, with_context = false) }}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2" align="center">Характеристики не найдены</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
