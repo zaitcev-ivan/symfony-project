@@ -47,6 +47,16 @@ class MenuBuilder {
             )
             ;
 
+        $characteristic_info = (new MenuItemModel('Характеристики'))
+            ->setIcon('fa fa-share')
+            ->addChild(
+                (new MenuItemModel('Список характеристик'))->setRoute('admin_characteristic_list')
+            )
+            ->addChild(
+                (new MenuItemModel('Создать характеристику'))->setRoute('admin_characteristic_create')
+            )
+            ;
+
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
             ->setIcon('fa fa-share')
@@ -70,6 +80,7 @@ class MenuBuilder {
             $contact_info,
             $brand_info,
             $category_info,
+            $characteristic_info,
             //$item_multilevel,
             //$item_info
         ];

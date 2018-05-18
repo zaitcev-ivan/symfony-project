@@ -1,0 +1,5 @@
+{% if characteristic.required == true %}
+    <span class="label label-success">Да</span>
+{% elseif characteristic.required == false %}
+    <span class="label label-primary">Нет</span>
+{% endif %}

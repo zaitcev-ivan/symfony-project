@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+<div class="box-body">
+    <div class="form-group">
+        <label for="inputName">Название</label>
+        {{ form_widget(form.name, {'class' : 'form-control', 'id' : 'inputName'}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-group">
+        <label for="inputType">Тип</label>
+        {{ form_widget(form.type, {'class' : 'form-control', 'id' : 'inputType'}) }}
+        {{ form_errors(form.type) }}
+    </div>
+    <div class="form-group">
+        <label for="inputDefault">Значение по умолчанию</label>
+        {{ form_widget(form.default, {'class' : 'form-control', 'id' : 'inputDefault'}) }}
+        {{ form_errors(form.default) }}
+    </div>
+    <div class="form-group">
+        <label for="inputVariants">Варианты</label>
+        {{ form_widget(form.variantsText, {'class' : 'form-control', 'id' : 'inputVariants'}) }}
+        {{ form_errors(form.variantsText) }}
+    </div>
+    <div class="form-group">
+        <label for="inputSort">Сортировка</label>
+        {{ form_widget(form.sort, {'class' : 'form-control', 'id' : 'inputSort'}) }}
+        {{ form_errors(form.sort) }}
+    </div>
+    {{ form_widget(form.required, {'class' : 'form-control', 'id' : 'inputRequired'}) }}
+    {{ form_errors(form.required) }}
+</div>
+<div class="box-footer">
+    <button type="submit" class="btn btn-primary" formnovalidate>Сохранить</button>
+</div>
+{{ form_end(form) }}
