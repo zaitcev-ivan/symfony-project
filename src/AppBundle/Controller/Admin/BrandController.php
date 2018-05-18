@@ -6,6 +6,7 @@ use AppBundle\Dto\BrandDto;
 use AppBundle\Entity\Brand;
 use AppBundle\Form\BrandType;
 use AppBundle\Service\BrandService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -95,6 +96,7 @@ class BrandController extends Controller
 
     /**
      * @Route("/admin/brand/delete/{id}", requirements={"id": "\d+"}, name="admin_brand_delete")
+     * @Method("POST")
      * @param Brand $brand
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

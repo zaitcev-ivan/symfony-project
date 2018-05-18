@@ -6,6 +6,7 @@ use AppBundle\Dto\CategoryDto;
 use AppBundle\Entity\Category;
 use AppBundle\Form\CategoryType;
 use AppBundle\Service\CategoryService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -110,6 +111,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/admin/category/delete/{id}", requirements={"id": "\d+"}, name="admin_category_delete")
+     * @Method("POST")
      * @param Request $request
      * @param Category $category
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -133,6 +135,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/admin/category/move-up/{id}", requirements={"id": "\d+"}, name="admin_category_move_up")
+     * @Method("POST")
      * @param Request $request
      * @param Category $category
      * @return RedirectResponse
@@ -155,6 +158,7 @@ class CategoryController extends Controller
 
     /**
      * @Route("/admin/category/move-down/{id}", requirements={"id": "\d+"}, name="admin_category_move_down")
+     * @Method("POST")
      * @param Request $request
      * @param Category $category
      * @return RedirectResponse
