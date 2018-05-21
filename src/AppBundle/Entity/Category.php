@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,6 +16,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Category
 {
     private const ROOT_CATEGORY = 'root';
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -64,6 +71,13 @@ class Category
      * @ORM\OrderBy({"left" = "ASC"})
      */
     private $children;
+
+    /**
+     * @var Product[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="category")
+     */
+    private $products;
 
     /**
      * @return mixed
@@ -186,5 +200,13 @@ class Category
     public static function getRootCategoryName(): string
     {
         return self::ROOT_CATEGORY;
+    }
+
+    /**
+     * @return ArrayCollection|Product[]
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

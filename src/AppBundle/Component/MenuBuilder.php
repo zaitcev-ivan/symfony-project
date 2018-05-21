@@ -57,6 +57,16 @@ class MenuBuilder {
             )
             ;
 
+        $product_info = (new MenuItemModel('Продукты'))
+            ->setIcon('fa fa-share')
+            ->addChild(
+                (new MenuItemModel('Список продуктов'))->setRoute('admin_product_list')
+            )
+            ->addChild(
+                (new MenuItemModel('Создать продукт'))->setRoute('admin_product_create')
+            )
+        ;
+
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
             ->setIcon('fa fa-share')
@@ -81,6 +91,7 @@ class MenuBuilder {
             $brand_info,
             $category_info,
             $characteristic_info,
+            $product_info,
             //$item_multilevel,
             //$item_info
         ];

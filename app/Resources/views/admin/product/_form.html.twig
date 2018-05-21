@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+<div class="box-body">
+    <div class="form-group">
+        <label for="inputName">Название</label>
+        {{ form_widget(form.name, {'class' : 'form-control', 'id' : 'inputName'}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-group">
+        <label for="inputCode">Код</label>
+        {{ form_widget(form.code, {'class' : 'form-control', 'id' : 'inputCode'}) }}
+        {{ form_errors(form.code) }}
+    </div>
+    <div class="form-group">
+        <label for="inputCategory">Категория</label>
+        {{ form_widget(form.categoryId, {'class' : 'form-control', 'id' : 'inputCategory'}) }}
+        {{ form_errors(form.categoryId) }}
+    </div>
+    <div class="form-group">
+        <label for="inputBrand">Бренд</label>
+        {{ form_widget(form.brandId, {'class' : 'form-control', 'id' : 'inputBrand'}) }}
+        {{ form_errors(form.brandId) }}
+    </div>
+    <div class="form-group">
+        <label for="inputPrice">Цена</label>
+        {{ form_widget(form.price, {'class' : 'form-control', 'id' : 'inputPrice'}) }}
+        {{ form_errors(form.price) }}
+    </div>
+</div>
+<div class="box-footer">
+    <button type="submit" class="btn btn-primary" formnovalidate>Сохранить</button>
+</div>
+{{ form_end(form) }}
