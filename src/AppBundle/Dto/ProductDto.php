@@ -24,10 +24,10 @@ class ProductDto
     public $code;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @Assert\Valid()
+     * @var ProductCategoriesDto
      */
-    public $categoryId;
+    public $category;
 
     /**
      * @Assert\NotBlank()
@@ -48,7 +48,7 @@ class ProductDto
             $this->name = $product->getName();
             $this->code = $product->getCode();
             $this->price = $product->getPrice();
-            $this->categoryId = $product->getCategory()->getId();
+            $this->category = new ProductCategoriesDto($product);
             $this->brandId = $product->getBrand()->getId();
         }
     }

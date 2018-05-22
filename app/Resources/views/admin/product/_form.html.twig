@@ -11,9 +11,14 @@
         {{ form_errors(form.code) }}
     </div>
     <div class="form-group">
-        <label for="inputCategory">Категория</label>
-        {{ form_widget(form.categoryId, {'class' : 'form-control', 'id' : 'inputCategory'}) }}
-        {{ form_errors(form.categoryId) }}
+        <label for="inputCategory">Основная категория</label>
+        {{ form_widget(form.category.main, {'class' : 'form-control', 'id' : 'inputCategory'}) }}
+        {{ form_errors(form.category.main) }}
+    </div>
+    <div class="form-group">
+        <label for="inputOtherCategory">Дополнительные категории</label>
+        {{ form_widget(form.category.other, {'class' : 'form-control', 'id' : 'inputOtherCategory'}) }}
+        {{ form_errors(form.category.other) }}
     </div>
     <div class="form-group">
         <label for="inputBrand">Бренд</label>

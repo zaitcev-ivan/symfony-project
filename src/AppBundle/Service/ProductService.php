@@ -34,7 +34,7 @@ class ProductService
      */
     public function create(ProductDto $dto): void
     {
-        $category = $this->categoryRepository->get($dto->categoryId);
+        $category = $this->categoryRepository->get($dto->category->main);
         $brand = $this->brandRepository->get($dto->brandId);
 
         $product = new Product();
@@ -43,6 +43,11 @@ class ProductService
         $product->setPrice($dto->price);
         $product->setCategory($category);
         $product->setBrand($brand);
+
+        foreach($dto->category->other as $otherCategoryId) {
+            $category = $this->categoryRepository->get($otherCategoryId);
+            $product->assignCategory($category);
+        }
 
         $this->em->persist($product);
         $this->em->flush();
@@ -56,7 +61,7 @@ class ProductService
      */
     public function edit(Product $product, ProductDto $dto): void
     {
-        $category = $this->categoryRepository->get($dto->categoryId);
+        $category = $this->categoryRepository->get($dto->category->main);
         $brand = $this->brandRepository->get($dto->brandId);
 
         $product->setName($dto->name);
@@ -64,6 +69,12 @@ class ProductService
         $product->setPrice($dto->price);
         $product->setCategory($category);
         $product->setBrand($brand);
+
+        $product->removeAllCategories();
+        foreach($dto->category->other as $otherCategoryId) {
+            $category = $this->categoryRepository->get($otherCategoryId);
+            $product->assignCategory($category);
+        }
 
         $this->em->persist($product);
         $this->em->flush();

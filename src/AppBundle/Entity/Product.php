@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,6 +16,7 @@ class Product
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->assignmentsCategory = new ArrayCollection();
     }
 
     /**
@@ -46,6 +48,17 @@ class Product
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @var Category[]
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinTable(name="category_assignments",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     * )
+     */
+    private $assignmentsCategory;
 
     /**
      * @var Brand
@@ -154,5 +167,38 @@ class Product
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return ArrayCollection|Category[]
+     */
+    public function getAssignmentsCategory()
+    {
+        return $this->assignmentsCategory;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function assignCategory(Category $category): void
+    {
+        if (!$this->assignmentsCategory->contains($category)) {
+            $this->assignmentsCategory->add($category);
+        }
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function removeCategory(Category $category): void
+    {
+        if ($this->assignmentsCategory->contains($category)) {
+            $this->assignmentsCategory->remove($category);
+        }
+    }
+
+    public function removeAllCategories(): void
+    {
+        $this->assignmentsCategory->clear();
     }
 }

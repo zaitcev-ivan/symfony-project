@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -40,10 +41,8 @@ class ProductType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => false, 'attr'=> ['placeholder' => 'Введите название']])
             ->add('code', TextType::class, ['label' => false, 'attr'=> ['placeholder' => 'Введите код']])
-            ->add('categoryId', ChoiceType::class, [
-                'label' => false,
-                'placeholder' => 'Выберите категорию',
-                'choices' => $choicesCategory,
+            ->add('category', ProductCategoriesType::class, [
+                'categories' => $options['categories'],
             ])
             ->add('brandId', ChoiceType::class, [
                 'label' => false,
