@@ -17,6 +17,7 @@ class Product
     {
         $this->createdAt = new \DateTime();
         $this->assignmentsCategory = new ArrayCollection();
+        $this->values = new ArrayCollection();
     }
 
     /**
@@ -72,6 +73,13 @@ class Product
      * @ORM\Column(name="price", type="integer")
      */
     private $price;
+
+    /**
+     * @var Value[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Value", mappedBy="product")
+     */
+    private $values;
 
     /**
      * @return mixed
@@ -200,5 +208,36 @@ class Product
     public function removeAllCategories(): void
     {
         $this->assignmentsCategory->clear();
+    }
+
+    /**
+     * @param Characteristic $characteristic
+     * @param $value
+     */
+    public function setValue(Characteristic $characteristic, $value): void
+    {
+        foreach($this->values as $i => $oneValue) {
+            if($oneValue->isForCharacteristic($characteristic->getId())) {
+                $this->values[$i]->setValue($value);
+                return;
+            }
+        }
+        $newValue = new Value($characteristic, $value);
+        $this->values->add($newValue);
+    }
+
+    /**
+     * @param Characteristic $characteristic
+     * @return Value
+     */
+    public function getValue(Characteristic $characteristic): Value
+    {
+        foreach($this->values as $oneValue) {
+            if($oneValue->isForCharacteristic($characteristic->getId())) {
+                return $oneValue;
+            }
+        }
+
+        return new Value($characteristic);
     }
 }

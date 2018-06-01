@@ -2,6 +2,7 @@
 
 namespace AppBundle\Dto;
 
+use AppBundle\Entity\Characteristic;
 use AppBundle\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,7 +43,12 @@ class ProductDto
      */
     public $price;
 
-    public function __construct(Product $product = null)
+    /**
+     * @var ValueDto[]
+     */
+    public $values;
+
+    public function __construct(Product $product = null, array $characteristicList = [])
     {
         if($product instanceof Product) {
             $this->name = $product->getName();
@@ -51,5 +57,8 @@ class ProductDto
             $this->category = new ProductCategoriesDto($product);
             $this->brandId = $product->getBrand()->getId();
         }
+        $this->values = array_map(function (Characteristic $characteristic) {
+            return new ValueDto($characteristic);
+        }, $characteristicList);
     }
 }

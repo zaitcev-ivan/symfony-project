@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +53,13 @@ class Characteristic
      * @ORM\Column(name="sort", type="integer")
      */
     private $sort;
+
+    /**
+     * @var Value[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Value", mappedBy="characteristic")
+     */
+    private $values;
 
     /**
      * @return mixed
@@ -184,5 +192,25 @@ class Characteristic
             self::TYPE_FLOAT => 'Вещественное число',
             self::TYPE_STRING => 'Строка',
         ];
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->required;
+    }
+
+    public function isString(): bool
+    {
+        return $this->type === self::TYPE_STRING;
+    }
+
+    public function isInteger(): bool
+    {
+        return $this->type === self::TYPE_INTEGER;
+    }
+
+    public function isFloat(): bool
+    {
+        return $this->type === self::TYPE_FLOAT;
     }
 }

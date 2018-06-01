@@ -7,11 +7,11 @@ use AppBundle\Entity\Brand;
 use AppBundle\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -50,6 +50,13 @@ class ProductType extends AbstractType
                 'choices' => $choicesBrand,
             ])
             ->add('price', IntegerType::class, ['label' => false, 'attr'=> ['placeholder' => 'Введите цену']])
+            ->add('values', CollectionType::class, [
+                'entry_type' => ValuesType::class,
+                'entry_options' => [
+                    'characteristic' => $options['characteristic'],
+                ],
+
+            ])
 
         ;
     }
@@ -64,6 +71,7 @@ class ProductType extends AbstractType
             'data_class' => ProductDto::class,
             'categories' => null,
             'brands' => null,
+            'characteristic' => null,
         ]);
     }
 }

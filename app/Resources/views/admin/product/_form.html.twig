@@ -30,6 +30,15 @@
         {{ form_widget(form.price, {'class' : 'form-control', 'id' : 'inputPrice'}) }}
         {{ form_errors(form.price) }}
     </div>
+    <div class="form-group">
+        <label for="inputValues">Параметры</label><br>
+
+        {% for value in form.values %}
+            {{ form_widget(value, {'class' : 'form-control'}) }}
+            {{ form_errors(value) }}
+        {% endfor %}
+
+    </div>
 </div>
 <div class="box-footer">
     <button type="submit" class="btn btn-primary" formnovalidate>Сохранить</button>
