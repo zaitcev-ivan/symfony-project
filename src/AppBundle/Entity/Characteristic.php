@@ -17,6 +17,11 @@ class Characteristic
     private const TYPE_INTEGER = 'integer';
     private const TYPE_FLOAT = 'float';
 
+    public function __construct()
+    {
+        $this->variants = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -54,12 +59,6 @@ class Characteristic
      */
     private $sort;
 
-    /**
-     * @var Value[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Value", mappedBy="characteristic")
-     */
-    private $values;
 
     /**
      * @return mixed

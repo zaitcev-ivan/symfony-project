@@ -27,9 +27,6 @@ class CharacteristicDto
 
     public $default;
 
-    /**
-     * @Assert\NotBlank()
-     */
     public $variantsText;
 
     /**
@@ -46,7 +43,7 @@ class CharacteristicDto
             $this->type = $characteristic->getType();
             $this->required = $characteristic->getRequired();
             $this->default = $characteristic->getDefault();
-            $this->variantsText = implode(PHP_EOL, $characteristic->getVariants());
+            $this->variantsText = $characteristic->getVariants() ? implode(PHP_EOL, $characteristic->getVariants()) : "";
             $this->sort = $characteristic->getSort();
         }
         else {
@@ -54,8 +51,8 @@ class CharacteristicDto
         }
     }
 
-    public function getVariants(): array
+    public function getVariants()
     {
-        return preg_split('#\s+#i', $this->variantsText);
+        return trim($this->variantsText) ? preg_split('#\s+#i', $this->variantsText) : 0;
     }
 }

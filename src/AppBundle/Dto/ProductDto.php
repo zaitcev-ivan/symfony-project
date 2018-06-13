@@ -56,9 +56,15 @@ class ProductDto
             $this->price = $product->getPrice();
             $this->category = new ProductCategoriesDto($product);
             $this->brandId = $product->getBrand()->getId();
+            /** @var Characteristic $characteristic */
+            foreach($characteristicList as $characteristic) {
+                $this->values[] = new ValueDto($characteristic, $product->getValueByCharacteristic($characteristic));
+            }
         }
-        $this->values = array_map(function (Characteristic $characteristic) {
-            return new ValueDto($characteristic);
-        }, $characteristicList);
+        else {
+            $this->values = array_map(function (Characteristic $characteristic) {
+                return new ValueDto($characteristic);
+            }, $characteristicList);
+        }
     }
 }

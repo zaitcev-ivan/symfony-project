@@ -13,26 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Value
 {
-    public function __construct(Characteristic $characteristic, $value = '')
-    {
-        $this->characteristic = $characteristic;
-        $this->value = $value;
-    }
 
     /**
-     * @ORM\Id()
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var Product
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="values")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="values")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
+     * @var Characteristic
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Characteristic", inversedBy="values")
+     * @ORM\ManyToOne(targetEntity="Characteristic", inversedBy="values")
      * @ORM\JoinColumn(nullable=false)
      */
     private $characteristic;
@@ -81,5 +81,29 @@ class Value
     public function isForCharacteristic($id): bool
     {
         return $id === $this->characteristic->getId();
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * @param Characteristic $characteristic
+     */
+    public function setCharacteristic(Characteristic $characteristic): void
+    {
+        $this->characteristic = $characteristic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

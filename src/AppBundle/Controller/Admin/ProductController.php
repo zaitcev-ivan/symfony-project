@@ -94,10 +94,12 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('AppBundle:Category')->categoryList();
         $brands = $em->getRepository('AppBundle:Brand')->findAll();
+        $characteristicList = $em->getRepository('AppBundle:Characteristic')->findAll();
 
-        $editForm = $this->createForm(ProductType::class, new ProductDto($product), [
+        $editForm = $this->createForm(ProductType::class, new ProductDto($product, $characteristicList), [
             'categories' => $categories,
             'brands' => $brands,
+            'characteristic' => $characteristicList,
         ]);
 
         $editForm->handleRequest($request);

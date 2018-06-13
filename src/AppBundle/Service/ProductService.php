@@ -3,7 +3,12 @@
 namespace AppBundle\Service;
 
 use AppBundle\Dto\ProductDto;
+use AppBundle\Dto\ValueDto;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Value;
+use AppBundle\Repository\BrandRepository;
+use AppBundle\Repository\CategoryRepository;
+use AppBundle\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -13,8 +18,11 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProductService
 {
     private $em;
+    /** @var ProductRepository */
     private $productRepository;
+    /** @var CategoryRepository */
     private $categoryRepository;
+    /** @var BrandRepository  */
     private $brandRepository;
 
     public function __construct
@@ -49,6 +57,18 @@ class ProductService
             $product->assignCategory($category);
         }
 
+        /** @var ValueDto $valueDto */
+        foreach($dto->values as $valueDto) {
+            if(!empty($valueDto->value)) {
+                $value = new Value();
+                $value->setCharacteristic($valueDto->getCharacteristic());
+                $value->setProduct($product);
+                $value->setValue($valueDto->value);
+                $product->addValue($value);
+                $this->em->persist($value);
+            }
+        }
+
         $this->em->persist($product);
         $this->em->flush();
 
@@ -74,6 +94,19 @@ class ProductService
         foreach($dto->category->other as $otherCategoryId) {
             $category = $this->categoryRepository->get($otherCategoryId);
             $product->assignCategory($category);
+        }
+
+        $product->removeAllValues();
+        /** @var ValueDto $valueDto */
+        foreach($dto->values as $valueDto) {
+            if(!empty($valueDto->value)) {
+                $value = new Value();
+                $value->setCharacteristic($valueDto->getCharacteristic());
+                $value->setProduct($product);
+                $value->setValue($valueDto->value);
+                $product->addValue($value);
+                $this->em->persist($value);
+            }
         }
 
         $this->em->persist($product);

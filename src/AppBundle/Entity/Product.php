@@ -77,7 +77,12 @@ class Product
     /**
      * @var Value[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Value", mappedBy="product")
+     * @ORM\OneToMany(
+     *     targetEntity="AppBundle\Entity\Value",
+     *     mappedBy="product",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      */
     private $values;
 
@@ -211,33 +216,46 @@ class Product
     }
 
     /**
-     * @param Characteristic $characteristic
-     * @param $value
+     * @param Value $value
      */
-    public function setValue(Characteristic $characteristic, $value): void
+    public function addValue(Value $value)
     {
-        foreach($this->values as $i => $oneValue) {
-            if($oneValue->isForCharacteristic($characteristic->getId())) {
-                $this->values[$i]->setValue($value);
-                return;
-            }
+        if(!$this->values->contains($value)) {
+            $this->values->add($value);
         }
-        $newValue = new Value($characteristic, $value);
-        $this->values->add($newValue);
+    }
+
+    public function removeValue(Value $value)
+    {
+        if($this->values->contains($value)) {
+            $this->values->removeElement($value);
+        }
+    }
+
+    public function removeAllValues(): void
+    {
+        $this->values->clear();
+    }
+
+    /**
+     * @return Value[]|ArrayCollection
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 
     /**
      * @param Characteristic $characteristic
-     * @return Value
+     * @return Value|null
      */
-    public function getValue(Characteristic $characteristic): Value
+    public function getValueByCharacteristic(Characteristic $characteristic): ?Value
     {
-        foreach($this->values as $oneValue) {
-            if($oneValue->isForCharacteristic($characteristic->getId())) {
-                return $oneValue;
+        foreach($this->values as $value) {
+            if($value->isForCharacteristic($characteristic->getId())) {
+                return $value;
             }
         }
-
-        return new Value($characteristic);
+        return null;
     }
 }

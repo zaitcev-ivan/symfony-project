@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Dto\ValueDto;
 use AppBundle\Entity\Characteristic;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -33,36 +34,78 @@ class ValuesType extends AbstractType
 
             $characteristic = $value->getCharacteristic();
 
+            $choicesVariants = [];
+            $defaultValue = 0;
+            foreach((array)$characteristic->getVariants() as $key => $characteristicValue) {
+                $choicesVariants[$characteristicValue] = $characteristicValue;
+                if($value->value === null) {
+                    if ($characteristic->getDefault() == $characteristicValue) {
+                        $defaultValue = $key;
+                    }
+                }
+                else {
+                    $defaultValue = $value->value;
+                }
+            }
+
             $constraints = array_filter([
                 $characteristic->isRequired() ? new NotBlank() : false,
             ]);
 
             if($characteristic->isInteger()) {
-
-                $form->add('value', IntegerType::class, [
-                    'label' => $value->label,
-                    'attr' => ['placeholder' => 'Введите значение'],
-                    'constraints' => $constraints,
-                ]);
+                if($value->variantsList()) {
+                    $form->add('value', ChoiceType::class, [
+                        'label' => $value->label,
+                        'choices' => $choicesVariants,
+                        'data' => $defaultValue,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
+                else {
+                    $form->add('value', IntegerType::class, [
+                        'label' => $value->label,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
             }
             elseif($characteristic->isFloat()) {
-                $form->add('value', NumberType::class, [
-                    'label' => $value->label,
-                    'attr' => ['placeholder' => 'Введите значение'],
-                    'constraints' => $constraints,
-                ]);
+                if($value->variantsList()) {
+                    $form->add('value', ChoiceType::class, [
+                        'label' => $value->label,
+                        'choices' => $choicesVariants,
+                        'data' => $defaultValue,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
+                else {
+                    $form->add('value', NumberType::class, [
+                        'label' => $value->label,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
             }
             else {
-                $form->add('value', TextType::class, [
-                    'label' => $value->label,
-                    'attr' => ['placeholder' => 'Введите значение'],
-                    'constraints' => $constraints,
-                ]);
+                if($value->variantsList()) {
+                    $form->add('value', ChoiceType::class, [
+                        'label' => $value->label,
+                        'choices' => $choicesVariants,
+                        'data' => $defaultValue,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
+                else {
+                    $form->add('value', TextType::class, [
+                        'label' => $value->label,
+                        'attr' => ['placeholder' => 'Введите значение'],
+                        'constraints' => $constraints,
+                    ]);
+                }
             }
-
-
-
-
         });
     }
 

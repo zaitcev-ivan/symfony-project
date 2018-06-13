@@ -23,7 +23,7 @@ class ValueDto
 
     public function variantsList(): array
     {
-        return $this->characteristic ? array_combine($this->characteristic->getVariants(), $this->characteristic->getVariants()) : [];
+        return $this->characteristic->getVariants() ? array_combine($this->characteristic->getVariants(), $this->characteristic->getVariants()) : [];
     }
 
     public function getCharacteristic(): Characteristic
