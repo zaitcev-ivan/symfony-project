@@ -48,6 +48,11 @@ class ProductDto
      */
     public $values;
 
+    /**
+     * @var PhotoDto
+     */
+    public $photo;
+
     public function __construct(Product $product = null, array $characteristicList = [])
     {
         if($product instanceof Product) {
@@ -66,5 +71,6 @@ class ProductDto
                 return new ValueDto($characteristic);
             }, $characteristicList);
         }
+        $this->photo = new PhotoDto();
     }
 }

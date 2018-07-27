@@ -55,6 +55,8 @@ class ProductType extends AbstractType
                 'entry_options' => [
                     'characteristic' => $options['characteristic'],
                 ],
+            ])
+            ->add('photo', PhotoType::class, [
 
             ])
 

@@ -18,6 +18,7 @@ class Product
         $this->createdAt = new \DateTime();
         $this->assignmentsCategory = new ArrayCollection();
         $this->values = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     /**
@@ -85,6 +86,19 @@ class Product
      * )
      */
     private $values;
+
+    /**
+     * @var Photo[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="AppBundle\Entity\Photo",
+     *     mappedBy="product",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
+     * @ORM\OrderBy({"sort" = "ASC"})
+     */
+    private $photos;
 
     /**
      * @return mixed
@@ -257,5 +271,109 @@ class Product
             }
         }
         return null;
+    }
+
+    /**
+     * @param Photo $photo
+     */
+    public function addPhoto(Photo $photo): void
+    {
+        if(!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+        }
+    }
+
+    /**
+     * Удаление фото
+     * @param integer $photoId
+     */
+    public function removePhoto($photoId): void
+    {
+        foreach($this->photos as $photo) {
+            if($photo->getId() === (int) $photoId) {
+                $this->photos->removeElement($photo);
+                $photo->setProduct(null);
+                return;
+            }
+        }
+        throw new \DomainException('Photo not found');
+    }
+
+    /**
+     * Удаление всех фото
+     */
+    public function removeAllPhotos(): void
+    {
+        $this->photos->clear();
+    }
+
+    /**
+     * Перемещение фотографии вверх на одну позицию
+     * @param integer $id
+     */
+    public function movePhotoUp($id): void
+    {
+        foreach($this->photos as $i => $photo) {
+            if($photo->getId() === (int) $id) {
+                if ($prev = $this->photos[$i - 1] ?? null) {
+                    $this->photos[$i - 1] = $photo;
+                    $this->photos[$i] = $prev;
+                    $this->updateSortPhotos();
+                }
+                return;
+            }
+        }
+        throw new \DomainException('Photo is not found.');
+    }
+
+    /**
+     * Перемещение фотографии вниз на 1 позицию
+     * @param integer $id
+     */
+    public function movePhotoDown($id): void
+    {
+        foreach($this->photos as $i => $photo) {
+            if($photo->getId() === (int) $id) {
+                if ($next = $this->photos[$i + 1] ?? null) {
+                    $this->photos[$i] = $next;
+                    $this->photos[$i + 1] = $photo;
+                    $this->updateSortPhotos();
+                }
+                return;
+            }
+        }
+        throw new \DomainException('Photo is not found.');
+    }
+
+    /**
+     * Обновление сортировки фото
+     */
+    public function updateSortPhotos(): void
+    {
+        foreach($this->photos as $i => $photo) {
+            $this->photos[$i]->setSort($i);
+        }
+    }
+
+    /**
+     * Получить максимальный существующий номер сортировки
+     * @return int
+     */
+    public function getMaxSortValue(): int
+    {
+        $maxSort = 0;
+        foreach($this->photos as $photo) {
+            $maxSort = ($photo->getSort() > $maxSort) ? $photo->getSort() : $maxSort;
+        }
+        return $maxSort;
+    }
+
+
+    /**
+     * @return Photo[]|ArrayCollection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

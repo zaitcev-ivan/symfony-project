@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Dto\ProductDto;
 use AppBundle\Dto\ValueDto;
+use AppBundle\Entity\Photo;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Value;
 use AppBundle\Repository\BrandRepository;
@@ -69,6 +70,15 @@ class ProductService
             }
         }
 
+        foreach($dto->photo->files as $i => $file) {
+            $photo = new Photo();
+            $photo->setFile($file);
+            $photo->setSort($i);
+            $photo->setProduct($product);
+            $product->addPhoto($photo);
+            $this->em->persist($photo);
+        }
+
         $this->em->persist($product);
         $this->em->flush();
 
@@ -109,6 +119,17 @@ class ProductService
             }
         }
 
+        $maxSortValue = $product->getMaxSortValue();
+        foreach($dto->photo->files as $file) {
+            $photo = new Photo();
+            $photo->setFile($file);
+            $photo->setSort($maxSortValue);
+            $photo->setProduct($product);
+            $product->addPhoto($photo);
+            $this->em->persist($photo);
+            $maxSortValue++;
+        }
+
         $this->em->persist($product);
         $this->em->flush();
     }
@@ -122,4 +143,40 @@ class ProductService
         $this->em->flush();
     }
 
+    /**
+     * Удаление фотографии товара
+     * @param Product $product
+     * @param integer $photoId
+     */
+    public function deletePhoto(Product $product, $photoId): void
+    {
+        $product->removePhoto($photoId);
+        $product->updateSortPhotos();
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    /**
+     * Перемещение фото вверх на 1 позицию
+     * @param Product $product
+     * @param integer $photoId
+     */
+    public function movePhotoUp(Product $product, $photoId): void
+    {
+        $product->movePhotoUp($photoId);
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    /**
+     * Перемещение фото вниз на 1 позицию
+     * @param Product $product
+     * @param integer $photoId
+     */
+    public function movePhotoDown(Product $product, $photoId): void
+    {
+        $product->movePhotoDown($photoId);
+        $this->em->persist($product);
+        $this->em->flush();
+    }
 }

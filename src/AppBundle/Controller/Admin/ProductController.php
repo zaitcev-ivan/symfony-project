@@ -117,6 +117,7 @@ class ProductController extends Controller
 
         return $this->render('admin/product/edit.html.twig', [
             'editForm' => $editForm->createView(),
+            'product' => $product,
         ]);
     }
 
@@ -140,5 +141,59 @@ class ProductController extends Controller
             $this->addFlash('error', $e->getMessage());
         }
         return $this->redirectToRoute('admin_product_list');
+    }
+
+    /**
+     * @Route("/admin/product/{id}/photo-delete/{photoId}", requirements={"id": "\d+", "photoId": "\d+"}, name="admin_product_photo_delete")
+     * @param Request $request
+     * @param Product $product
+     * @param integer $photoId
+     * @return Response
+     */
+    public function deletePhotoAction(Request $request, Product $product, $photoId): Response
+    {
+        if (!$this->isCsrfTokenValid('deletePhoto', $request->request->get('token'))) {
+            return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+        }
+
+        try {
+            $this->productService->deletePhoto($product, $photoId);
+            $this->addFlash('success', 'Фотография удалена');
+        } catch (\DomainException $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+        return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+    }
+
+    /**
+     * @Route("/admin/product/{id}/move-photo-up/{photoId}", requirements={"id": "\d+", "photoId": "\d+"}, name="admin_product_move_photo_up")
+     * @param Product $product
+     * @param $photoId
+     * @return Response
+     */
+    public function movePhotoUpAction(Product $product, $photoId): Response
+    {
+        try {
+            $this->productService->movePhotoUp($product, $photoId);
+        } catch (\DomainException $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+        return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+    }
+
+    /**
+     * @Route("/admin/product/{id}/move-photo-down/{photoId}", requirements={"id": "\d+", "photoId": "\d+"}, name="admin_product_move_photo_down")
+     * @param Product $product
+     * @param $photoId
+     * @return Response
+     */
+    public function movePhotoDownAction(Product $product, $photoId): Response
+    {
+        try {
+            $this->productService->movePhotoDown($product, $photoId);
+        } catch (\DomainException $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+        return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
     }
 }

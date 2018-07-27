@@ -1,0 +1,7 @@
+<form action="{{ url('admin_product_photo_delete', {id: product.id, photoId: photo.id}) }}" method="post" id="delete-photo-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('deletePhoto') }}" />
+    <button type="submit" class="btn btn-sm btn-danger">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        &nbsp;Удалить
+    </button>
+</form>

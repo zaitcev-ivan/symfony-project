@@ -1,5 +1,10 @@
 {% extends '@SbSAdminLTE/Layout/base.html.twig' %}
 
+{% block corestyles %}
+    {{ parent() }}
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block admin_lte_logo %}
     <a href="{{ path('admin_homepage') }}" class="logo">
         <span class="logo-mini"><i class="fa fa-lg fa-home"></i></span>

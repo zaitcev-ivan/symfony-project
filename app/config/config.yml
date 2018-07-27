@@ -73,3 +73,9 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
+vich_uploader:
+    db_driver: orm
+    mappings:
+        product_photo:
+            uri_prefix:         /images/product-photo
+            upload_destination: '%kernel.root_dir%/../web/images/product-photo'

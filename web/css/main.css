@@ -2520,4 +2520,10 @@ h2.title {
   color: #FE980F;
 }
 
+.admin-buttons-photo {
+  margin-bottom: 15px;
+}
+.product-photo {
+  min-height: 120px;
+}
 

@@ -10,6 +10,13 @@
         {{ form_widget(form.code, {'class' : 'form-control', 'id' : 'inputCode'}) }}
         {{ form_errors(form.code) }}
     </div>
+
+    <div class="form-group">
+        <label for="inputPhoto">Фотографии</label><br>
+        {{ form_widget(form.photo.files, {'class' : 'form-control', 'id' : 'inputPhoto'}) }}
+        {{ form_errors(form.photo.files) }}
+    </div>
+
     <div class="form-group">
         <label for="inputCategory">Основная категория</label>
         {{ form_widget(form.category.main, {'class' : 'form-control', 'id' : 'inputCategory'}) }}
@@ -44,3 +51,46 @@
     <button type="submit" class="btn btn-primary" formnovalidate>Сохранить</button>
 </div>
 {{ form_end(form) }}
+{% if product is defined %}
+    <div class="box-body">
+        <div class="form-group">
+            <label for="inputPhoto">Фотографии</label><br>
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for photo in product.photos %}
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="thumbnail product-photo">
+                                    <img src="/images/product-photo/{{ photo.fileName }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="row admin-buttons-photo">
+                                    <div class="col-sm-12">
+                                        <a href="{{ path('admin_product_move_photo_up', {id: product.id, photoId: photo.id}) }}" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-arrow-up"></span>&nbsp;Переместить вверх</a>
+                                    </div>
+                                </div>
+                                <div class="row admin-buttons-photo">
+                                    <div class="col-sm-12">
+                                        <a href="{{ path('admin_product_move_photo_down', {id: product.id, photoId: photo.id}) }}" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;Переместить вниз</a>
+                                    </div>
+                                </div>
+                                <div class="row admin-buttons-photo">
+                                    <div class="col-sm-12">
+                                        {{ include('admin/product/_delete_photo.html.twig', {product : product, photo : photo}, with_context = false) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-sm-12">
+            <p>Нет загруженных файлов</p>
+        </div>
+    </div>
+{% endif %}
