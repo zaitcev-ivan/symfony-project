@@ -12,8 +12,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig', [
+        $em = $this->getDoctrine()->getManager();
 
+        $categoryRepository = $em->getRepository('AppBundle:Category');
+        $categories = $categoryRepository->childrenHierarchy();
+
+        $brandList = $em->getRepository('AppBundle:Brand')->findAll();
+
+        return $this->render('default/index.html.twig', [
+            'categories' => $categories,
+            'brands' => $brandList,
         ]);
     }
 }

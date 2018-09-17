@@ -8,9 +8,9 @@
                 <div class="left-sidebar">
                     <h2>Category</h2>
 
-                    {{ include('include/_category_menu.html.twig') }}
+                    {{ include('include/_category_menu.html.twig', {arrayTree : categories}) }}
 
-                    {{ include('include/_brand_menu.html.twig') }}
+                    {{ include('include/_brand_menu.html.twig', {brands : brands}) }}
 
                     {{ include('include/_price_range.html.twig') }}
 
