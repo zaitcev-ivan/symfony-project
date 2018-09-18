@@ -57,4 +57,28 @@ class CatalogController extends Controller
             'categoryName' => $categoryName,
         ]);
     }
+
+    /**
+     * @Route("/catalog/category/{categoryId}/product/{productId}", requirements={"categoryId": "\d+", "productId": "\d+"}, name="catalog_product")
+     * @param $categoryId
+     * @param $productId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function productAction($categoryId, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoryRepository = $em->getRepository('AppBundle:Category');
+        $categories = $categoryRepository->childrenHierarchy();
+        $brandList = $em->getRepository('AppBundle:Brand')->findAll();
+
+        $productRepository = $em->getRepository('AppBundle:Product');
+        $product = $productRepository->findOneByIdAndCategoryId($productId, $categoryId);
+
+        return $this->render('catalog/product.html.twig', [
+            'categories' => $categories,
+            'brands' => $brandList,
+            'product' => $product,
+        ]);
+    }
 }

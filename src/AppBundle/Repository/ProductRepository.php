@@ -24,4 +24,17 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findOneByIdAndCategoryId($productId, $categoryId)
+    {
+        return $this->findONeBy(['id' => $productId, 'category' => $categoryId]);
+//        return $this->createQueryBuilder('product')
+//            ->andWhere('product.category = :categoryId')
+//            ->setParameter('categoryId', $categoryId)
+//            ->andWhere('product.id = :productId')
+//            ->setParameter('productId', $productId)
+//            ->setMaxResults(1)
+//            ->getQuery()
+//            ->execute();
+    }
 }

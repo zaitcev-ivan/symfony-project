@@ -1,0 +1,58 @@
+<div class="product-details"><!--product-details-->
+    <div class="col-sm-5">
+        <div class="view-product">
+            {% if product.photos|length %}
+                <img src="/images/product-photo/{{ product.photos[0].fileName }}">
+            {% else %}
+                <img src="https://dummyimage.com/207x183">
+            {% endif %}
+        </div>
+        <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+            {% if product.photos|length %}
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <a href=""><img src="/images/product-details/similar1.jpg" alt=""></a>
+                    <a href=""><img src="/images/product-details/similar2.jpg" alt=""></a>
+                    <a href=""><img src="/images/product-details/similar3.jpg" alt=""></a>
+                </div>
+            </div>
+            {% endif %}
+            <!-- Controls -->
+            <a class="left item-control" href="#similar-product" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right item-control" href="#similar-product" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+
+    </div>
+    <div class="col-sm-7">
+        <div class="product-information"><!--/product-information-->
+            {#<img src="/images/product-details/new.jpg" class="newarrival" alt="" />#}
+            <h2>{{ product.name }}</h2>
+            <p>Артикул: {{ product.code }}</p>
+            <img src="/images/product-details/rating.png" alt="" />
+            <span>
+                <span>{{ product.price }}</span>
+                <label>Количество:</label>
+                <input type="text" value="1" />
+                <button type="button" class="btn btn-fefault cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    Add to cart
+                </button>
+            </span>
+            {% if product.values|length %}
+                {% for value in product.values %}
+                    <p><b>{{ value.characteristic.name }}:</b> {{ value.value }}</p>
+                {% endfor %}
+            {% endif %}
+
+
+            <p><b>Brand:</b> {{ product.brand.name }}</p>
+            <a href=""><img src="/images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+        </div><!--/product-information-->
+    </div>
+</div><!--/product-details-->
