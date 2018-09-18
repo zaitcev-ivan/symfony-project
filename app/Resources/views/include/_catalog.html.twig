@@ -1,0 +1,11 @@
+<div class="features_items">
+    <h2 class="title text-center">{{ categoryName }}</h2>
+
+
+    {% for product in  products %}
+
+    {{ include('include/_product_item.html.twig', {product : product}) }}
+
+    {% endfor %}
+
+</div>

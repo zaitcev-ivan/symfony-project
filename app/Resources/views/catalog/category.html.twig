@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block container %}
-{{ include('include/_slider.html.twig') }}
 <section>
     <div class="container">
         <div class="row">
@@ -13,27 +12,16 @@
 
                     {{ include('include/_price_range.html.twig') }}
 
-                    <div class="shipping text-center"><!--shipping-->
-                        <img src="/images/home/shipping.jpg" alt="" />
-                    </div><!--/shipping-->
-
                 </div>
             </div>
-
             <div class="col-sm-9 padding-right">
+                {% block body %}
 
-{% block body %}
+                    {{ include('include/_catalog.html.twig', {categoryName: categoryName, products: products}) }}
 
-{{ include('include/_features_items.html.twig') }}
-
-{% endblock %}
-
-{{ include('include/_category_tab.html.twig') }}
-
-{{ include('include/_recommended_items.html.twig') }}
-
+                {% endblock %}
+            </div>
         </div>
     </div>
-</div>
 </section>
 {% endblock %}

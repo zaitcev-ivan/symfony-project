@@ -1,15 +1,16 @@
+<h2>Category</h2>
 <div class="panel-group category-products" id="accordian">
     {% for category in arrayTree[0].__children %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
                 {% if category.__children %}
-                <a data-toggle="collapse" data-parent="#accordian" href="#{{ category.name }}">
+                <a data-toggle="collapse" data-parent="#accordian" href="{{ path('catalog_category', {categoryId : category.id}) }}#{{ category.name }}">
                     <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                     {{ category.name }}
                 </a>
                 {% else %}
-                    <a href="#">{{ category.name }}</a>
+                    <a href="{{ path('catalog_category', {categoryId : category.id}) }}">{{ category.name }}</a>
                 {% endif %}
             </h4>
         </div>
@@ -18,7 +19,7 @@
                 <div class="panel-body">
                     <ul>
                         {% for children in category.__children %}
-                            <li><a href="#">{{ children.name }} </a></li>
+                            <li><a href="{{ path('catalog_category', {categoryId : children.id}) }}">{{ children.name }} </a></li>
                          {% endfor %}
                     </ul>
                 </div>
