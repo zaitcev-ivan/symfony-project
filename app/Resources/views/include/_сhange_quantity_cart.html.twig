@@ -1,0 +1,13 @@
+<div class="cart_quantity_button">
+    <form action="{{ url('cart_set', {productId: item.product.id, quantity : item.quantity + 1}) }}" method="post" id="set-to-cart" style="display: inline-block;">
+        <input type="hidden" name="token" value="{{ csrf_token('setToCart') }}" />
+        <button type="submit" class="cart_quantity_up"> + </button>
+    </form>
+    <input class="cart_quantity_input" type="text" name="quantity" value="{{ item.quantity }}" autocomplete="off" size="2">
+    {% if item.quantity > 1 %}
+    <form action="{{ url('cart_set', {productId: item.product.id, quantity : item.quantity - 1}) }}" method="post" id="set-to-cart" style="display: inline-block;">
+        <input type="hidden" name="token" value="{{ csrf_token('setToCart') }}" />
+        <button type="submit" class="cart_quantity_down"> - </button>
+    </form>
+    {% endif %}
+</div>

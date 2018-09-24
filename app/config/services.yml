@@ -52,3 +52,26 @@ services:
       class: Gedmo\Tree\TreeListener
       tags:
         - { name: doctrine.event_subscriber }
+
+    app.user:
+      class: AppBundle\Entity\User
+      public: true
+
+    app.cart.db_storage:
+      class: AppBundle\Cart\storage\DbStorage
+      arguments:
+        $tokenStorage: "@security.token_storage"
+        $em: "@doctrine.orm.entity_manager"
+
+    app.cart.cost:
+      class: AppBundle\Cart\cost\Cost
+
+    app.cart.cart:
+      class: AppBundle\Cart\Cart
+      arguments:
+        $storage: "@app.cart.db_storage"
+        $calculator: "@app.cart.cost"
+
+    app.cart_service:
+      class: AppBundle\Service\CartService
+      public: true

@@ -1,0 +1,8 @@
+<td class="cart_delete">
+    <form action="{{ url('cart_delete', {productId: product.id}) }}" method="post" id="delete-to-cart" style="display: inline-block;">
+        <input type="hidden" name="token" value="{{ csrf_token('removeFromCart') }}" />
+        <button type="submit" class="cart_quantity_delete">
+            <i class="fa fa-times"></i>
+        </button>
+    </form>
+</td>
