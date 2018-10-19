@@ -67,6 +67,16 @@ class MenuBuilder {
             )
         ;
 
+        $delivery_info = (new MenuItemModel('Методы доставки'))
+            ->setIcon('fa fa-share')
+            ->addChild(
+                (new MenuItemModel('Список метдов'))->setRoute('admin_delivery_list')
+            )
+            ->addChild(
+                (new MenuItemModel('Создать метод'))->setRoute('admin_delivery_create')
+            )
+        ;
+
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
             ->setIcon('fa fa-share')
@@ -92,6 +102,7 @@ class MenuBuilder {
             $category_info,
             $characteristic_info,
             $product_info,
+            $delivery_info,
             //$item_multilevel,
             //$item_info
         ];

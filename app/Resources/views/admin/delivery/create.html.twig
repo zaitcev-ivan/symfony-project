@@ -1,0 +1,31 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Создать метод доставки</h3>
+        </div>
+        <div class="box-body">
+            {{ form_start(createForm) }}
+            <div class="box-body">
+                <div class="form-group {% if not createForm.name.vars.valid %}has-error{% endif %}">
+                    <label for="inputName">Название</label>
+                    {{ form_widget(createForm.name, {'class' : 'form-control', 'id' : 'inputName'}) }}
+                    {{ form_errors(createForm.name) }}
+                </div>
+                <div class="form-group {% if not createForm.cost.vars.valid %}has-error{% endif %}">
+                    <label for="inputCost">Стоимость доставки</label>
+                    {{ form_widget(createForm.cost, {'class' : 'form-control', 'id' : 'inputCost'}) }}
+                    {{ form_errors(createForm.cost) }}
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" formnovalidate>Создать</button>
+            </div>
+            {{ form_end(createForm) }}
+        </div>
+    </div>
+
+{% endblock %}
