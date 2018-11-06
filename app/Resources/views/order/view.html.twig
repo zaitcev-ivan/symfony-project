@@ -4,11 +4,11 @@
         <div class="container">
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><a href="{{ path('homepage') }}">Главная</a></li>
-                    <li class="active">Корзина товаров</li>
+                    <li><a href="{{ url('homepage') }}">Главная</a></li>
+                    <li><a href="{{ url('order_index') }}">Заказы</a></li>
+                    <li class="active">Заказ #{{ order.id }}</li>
                 </ol>
-            </div>
-            {% if cart.items|length %}
+            </div><!--/breadcrums-->
             <div class="table-responsive cart_info">
                 <table class="table table-condensed">
                     <thead>
@@ -22,9 +22,8 @@
                     </tr>
                     </thead>
                     <tbody>
-
-
-                        {% for item in cart.items %}
+                    {% if order.items|length %}
+                        {% for item in order.items %}
                             <tr>
                                 <td class="cart_product">
                                     {% if item.product.photos|length %}
@@ -41,23 +40,19 @@
                                     <p>{{ item.price }} руб.</p>
                                 </td>
                                 <td class="cart_quantity">
-                                    {{ include('include/_сhange_quantity_cart.html.twig', {item : item}) }}
+                                    {{ item.quantity }}
                                 </td>
                                 <td class="cart_total">
-                                    <p class="cart_total_price">{{ item.cost }} руб.</p>
+                                    <p class="cart_total_price">{{ item.price * item.quantity }} руб.</p>
                                 </td>
-                                {{ include('include/_delete_to_cart.html.twig', {product : item.product}, with_context = false) }}
                             </tr>
                         {% endfor %}
-
-
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
-            {% endif %}
         </div>
     </section> <!--/#cart_items-->
-    {% if cart.items|length %}
     <section id="do_action">
         <div class="container">
             <div class="heading">
@@ -67,20 +62,33 @@
                 <div class="col-sm-6">
                     <div class="total_area">
                         <ul>
-                            <li>Кол-во товаров <span>{{ cart.amount }}</span></li>
-                            <li>Общая стоимость заказа <span>{{ cart.cost }} руб.</span></li>
+                            <li>Кол-во товаров <span>{{ order.items|length }}</span></li>
+                            <li>Стоимость заказа <span>{{ order.cost }} руб.</span></li>
+                            <li>Стоимость доставки <span>{{ order.deliveryMethodCost }} руб.</span></li>
+                            <li>Итого <span>{{ order.deliveryMethodCost + order.cost }} руб.</span></li>
+                            <li>Метод доставки <span>{{ order.deliveryMethodName }}</span></li>
                         </ul>
-                        <a class="btn btn-default check_out" href="{{ url('order_checkout') }}">Оформить заказ</a>
+                        {% if order.new %}
+                            {{ include('order/_paid.html.twig', {order : order}, with_context = false) }}
+                            <br><br>
+                            {{ include('order/_reject.html.twig', {order : order, form : rejectForm}, with_context = false) }}
+                        {% elseif order.canComplete %}
+                            {{ include('order/_completed.html.twig', {order : order}, with_context = false) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                            <li>Адрес доставки <span>{{ order.deliveryAddress }}</span></li>
+                            <li>Почтовый индекс <span>{{ order.deliveryIndex }}</span></li>
+                            <li>Имя получателя <span>{{ order.userName }}</span></li>
+                            <li>Контактный телефон <span>{{ order.userPhone }}</span></li>
+                            <li>Статус заказа <span>{{ include('admin/order/_status.html.twig', {status : order.currentStatus}, with_context = false) }}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section><!--/#do_action-->
-    {% else %}
-        <section id="cart_items">
-            <div class="container">
-                <h4>В корзине нет товаров</h4>
-            </div><br>
-        </section>
-    {% endif %}
 {% endblock %}

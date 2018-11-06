@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block container %}
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="{{ url('homepage') }}">Главная</a></li>
+                    <li class="active">Заказы</li>
+                </ol>
+            </div><!--/breadcrums-->
+            {% if orderList|length %}
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Номер заказа</td>
+                        <td class="description">Статус заказа</td>
+                        <td class="quantity">Количество товаров</td>
+                        <td class="total">Итого</td>
+                        <td class="total">Метод доставки</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for order in orderList %}
+                            <tr>
+                                <td class="cart_product">
+                                    <a href="{{ path('order_view', {'id': order.id}) }}">#{{ order.id }}</a>
+                                </td>
+                                <td class="cart_description">
+                                    {{ include('admin/order/_status.html.twig', {status : order.currentStatus}, with_context = false) }}
+                                </td>
+                                <td class="cart_price">
+                                    <p>{{ order.items|length }}</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p class="cart_total_price">{{ order.deliveryMethodCost + order.cost }} руб.</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p>{{ order.deliveryMethodName }}</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </section> <!--/#cart_items-->
+{% endblock %}

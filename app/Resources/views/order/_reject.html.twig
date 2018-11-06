@@ -1,0 +1,11 @@
+{{ form_start(form, {'action': path('order_reject', {id: order.id})}) }}
+
+    {{ form_widget(form.reason, {'attr': {'class' : 'rejectTextArea'}}) }}
+    {{ form_errors(form.reason) }}
+
+    <button type="submit" class="btn btn btn-danger update">
+        <i class="fa fa-close" aria-hidden="true"></i>
+        &nbsp;Отменить заказ
+    </button>
+
+{{ form_end(form) }}

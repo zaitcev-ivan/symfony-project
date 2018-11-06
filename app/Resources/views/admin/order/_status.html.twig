@@ -1,0 +1,13 @@
+{% if status == 'new' %}
+    <span class="label label-info">Новый</span>
+{% elseif status == 'paid' %}
+    <span class="label label-primary">Оплачен</span>
+{% elseif status == 'sent' %}
+    <span class="label label-warning">Отправлен</span>
+{% elseif status == 'completed' %}
+    <span class="label label-success">Подтвержден</span>
+{% elseif status == 'cancelled' %}
+    <span class="label label-default">Отменен администратором</span>
+{% elseif status == 'cancelled_by_customer' %}
+    <span class="label label-default">Отменен</span>
+{% endif %}

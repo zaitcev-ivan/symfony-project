@@ -1,0 +1,120 @@
+{% extends 'base.admin.html.twig' %}
+{% block header_content %}
+{% endblock %}
+{% block page_content %}
+
+    <div class="box box-solid box-primary">
+        <div class="box-body">
+            {{ include('admin/order/_paid.html.twig', {order : order}, with_context = false) }}
+            {{ include('admin/order/_sent.html.twig', {order : order}, with_context = false) }}
+            {{ include('admin/order/_reject.html.twig', {order : order}, with_context = false) }}
+            {{ include('admin/order/_completed.html.twig', {order : order}, with_context = false) }}
+        </div>
+    </div>
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Заказ #{{ order.id }}</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Номер заказа</td>
+                    <td>#{{ order.id }}</td>
+                </tr>
+                <tr>
+                    <td>Статус</td>
+                    <td>{{ include('admin/order/_status.html.twig', {status : order.currentStatus}, with_context = false) }}</td>
+                </tr>
+                <tr>
+                    <td>Имя</td>
+                    <td>{{ order.userName }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ order.user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Телефон</td>
+                    <td>{{ order.userPhone }}</td>
+                </tr>
+                <tr>
+                    <td>Метод доставки</td>
+                    <td>{{ order.deliveryMethodName }}</td>
+                </tr>
+                <tr>
+                    <td>Стоимость доставки</td>
+                    <td>{{ order.deliveryMethodCost }}</td>
+                </tr>
+                <tr>
+                    <td>Стоимость покупки</td>
+                    <td>{{ order.cost }}</td>
+                </tr>
+                <tr>
+                    <td>Метод оплаты</td>
+                    <td>{% if order.paymentMethod is not null %}{{ order.paymentMethod }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Комментарий</td>
+                    <td>{{ order.note }}</td>
+                </tr>
+                <tr>
+                    <td>Адрес доставки</td>
+                    <td>{{ order.deliveryAddress }}</td>
+                </tr>
+                <tr>
+                    <td>Почтовый индекс</td>
+                    <td>{{ order.deliveryIndex }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Товары</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Название</th>
+                    <th>Артикул</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                </tr>
+                {% for item in order.items %}
+                    <tr>
+                        <td>{{ item.productName }}</td>
+                        <td>{{ item.productCode }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">История изменения статусов</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                </tr>
+                {% for status in order.status %}
+                <tr>
+                    <td>{{ status.createdAt|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ include('admin/order/_status.html.twig', {status : status.value}, with_context = false) }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+<form action="{{ url('order_complete', {id: order.id}) }}" method="post" id="delete-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('complete') }}" />
+    <button type="submit" class="btn btn btn-default update" {% if not order.canComplete %} disabled {% endif %}>
+        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+        &nbsp;Подтвердить получение
+    </button>
+</form>

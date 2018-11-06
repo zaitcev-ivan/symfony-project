@@ -77,6 +77,13 @@ class MenuBuilder {
             )
         ;
 
+        $order_info = (new MenuItemModel('Заказы'))
+            ->setIcon('fa fa-share')
+            ->addChild(
+                (new MenuItemModel('Список заказов'))->setRoute('admin_order_list')
+            )
+        ;
+
         // Multi Level Menu
         $item_multilevel = (new MenuItemModel('Multilevel'))
             ->setIcon('fa fa-share')
@@ -103,6 +110,7 @@ class MenuBuilder {
             $characteristic_info,
             $product_info,
             $delivery_info,
+            $order_info,
             //$item_multilevel,
             //$item_info
         ];

@@ -1,0 +1,7 @@
+<form action="{{ url('admin_order_reject', {id: order.id}) }}" method="post" id="delete-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('reject') }}" />
+    <button type="submit" class="btn btn btn-danger" {% if not order.new %} disabled {% endif %}>
+        <i class="fa fa-close" aria-hidden="true"></i>
+        &nbsp;Отменить заказ
+    </button>
+</form>

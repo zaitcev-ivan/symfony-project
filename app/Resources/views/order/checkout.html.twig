@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+{% block container %}
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="{{ url('homepage') }}">Главная</a></li>
+                    <li class="active">Оформление заказа</li>
+                </ol>
+            </div><!--/breadcrums-->
+
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Товар</td>
+                        <td class="description"></td>
+                        <td class="price">Цена</td>
+                        <td class="quantity">Количество</td>
+                        <td class="total">Итого</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if cart.items|length %}
+                        {% for item in cart.items %}
+                            <tr>
+                                <td class="cart_product">
+                                    {% if item.product.photos|length %}
+                                        <img src="/images/product-photo/{{ item.product.photos[0].fileName }}" style="width: 110px;">
+                                    {% else %}
+                                        <img src="https://dummyimage.com/110x110">
+                                    {% endif %}
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="{{ path('catalog_product', {categoryId : item.product.category.id, productId: item.product.id}) }}">{{ item.product.name }}</a></h4>
+                                    <p>Артикул: {{ item.product.code }}</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p>{{ item.price }} руб.</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    {{ item.quantity }}
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">{{ item.cost }} руб.</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="register-req">
+                <p>Заполните данные, необходимые для создания заказа</p>
+            </div><!--/register-req-->
+
+            <div class="shopper-informations">
+                {{ form_start(checkoutForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="shopper-info">
+                            <p>Адрес доставки</p>
+                            <div class="order-create-form">
+                                {{ form_widget(checkoutForm.deliveryIndex) }}
+                                {{ form_errors(checkoutForm.deliveryIndex) }}
+                                {{ form_widget(checkoutForm.deliveryAddress) }}
+                                {{ form_errors(checkoutForm.deliveryAddress) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bill-to">
+                            <p>Информация о покупателе</p>
+                            <div class="form-one">
+                                <div class="order-create-form">
+                                    {{ form_widget(checkoutForm.userName) }}
+                                    {{ form_errors(checkoutForm.userName) }}
+                                    {{ form_widget(checkoutForm.userPhone) }}
+                                    {{ form_errors(checkoutForm.userPhone) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="shopper-info">
+                            <p>Метод доставки</p>
+                            <div class="order-create-form">
+                                {{ form_widget(checkoutForm.deliveryMethodId) }}
+                                {{ form_errors(checkoutForm.deliveryMethodId) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="order-message">
+                            <p>Комментарий</p>
+                            {{ form_widget(checkoutForm.note) }}
+                            {{ form_errors(checkoutForm.note) }}
+                            <button type="submit" class="btn btn-primary">Оформить заказ</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_end(checkoutForm) }}
+            </div>
+
+        </div>
+    </section> <!--/#cart_items-->
+{% endblock %}

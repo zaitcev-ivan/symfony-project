@@ -1,0 +1,7 @@
+<form action="{{ url('admin_order_sent', {id: order.id}) }}" method="post" id="delete-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('paid') }}" />
+    <button type="submit" class="btn btn btn-default" {% if not order.canSent %} disabled {% endif %}>
+        <i class="fa fa-plane" aria-hidden="true"></i>
+        &nbsp;Отправить заказ
+    </button>
+</form>

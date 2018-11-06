@@ -1,0 +1,7 @@
+<form action="{{ url('order_paid', {id: order.id}) }}" method="post" id="delete-form" style="display: inline-block;">
+    <input type="hidden" name="token" value="{{ csrf_token('paid') }}" />
+    <button type="submit" class="btn btn btn-success update" {% if not order.new %} disabled {% endif %}>
+        <i class="fa fa-dollar" aria-hidden="true"></i>
+        &nbsp;Оплатить заказ
+    </button>
+</form>
