@@ -24,9 +24,6 @@ class PasswordResetRequestType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => false,
                 'attr' => ['placeholder' => 'Email'],
-                'constraints' => [
-                    new Assert\Email(),
-                ]
             ]);
     }
 

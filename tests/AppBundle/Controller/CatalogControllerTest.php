@@ -4,15 +4,12 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class CatalogControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
-
-        $crawler = $client->request('GET', '/');
-
+        $client->request('GET', '/catalog');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Home | E-Shopper', $crawler->filter('title')->text());
     }
 }
