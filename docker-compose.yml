@@ -1,0 +1,34 @@
+version: '3'
+services:
+  symfony-nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.docker
+    volumes:
+      - ./:/var/www/symfony
+    ports:
+      - "8080:80"
+    depends_on:
+      - symfony-php-fpm
+  symfony-php-fpm:
+    build:
+      context: ./docker
+      args:
+        TIMEZONE: ${TIMEZONE}
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./:/var/www/symfony
+    depends_on:
+      - db
+    working_dir: /var/www/symfony
+  db:
+    image: mysql
+    volumes:
+      - "./var/data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 3336:3306
