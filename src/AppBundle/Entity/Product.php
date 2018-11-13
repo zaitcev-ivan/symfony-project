@@ -220,7 +220,7 @@ class Product
     public function removeCategory(Category $category): void
     {
         if ($this->assignmentsCategory->contains($category)) {
-            $this->assignmentsCategory->remove($category);
+            $this->assignmentsCategory->removeElement($category);
         }
     }
 
