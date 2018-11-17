@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new SbS\AdminLTEBundle\SbSAdminLTEBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
             new AppBundle\AppBundle(),
         ];
 
