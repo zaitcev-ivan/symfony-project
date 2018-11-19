@@ -75,3 +75,14 @@ services:
     app.cart_service:
       class: AppBundle\Service\CartService
       public: true
+    
+    AppBundle\Component\ElasticSearchSettings:
+      public: true
+      arguments:
+        $host: '%elastic_host%'
+        $port: '%elastic_port%'
+    
+    AppBundle\Service\SearchService:
+      arguments: 
+        - '@AppBundle\Component\ElasticSearchSettings'
+        

@@ -20,6 +20,7 @@ services:
       - ./:/var/www/symfony
     depends_on:
       - db
+      - elasticsearch
     working_dir: /var/www/symfony
   db:
     image: mysql

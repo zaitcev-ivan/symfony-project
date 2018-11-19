@@ -19,5 +19,5 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     passwordResetTokenExpire: 3600
     app.notifications.email_sender: anonymous@example.com
-    elastic_host: 127.0.0.1
+    elastic_host: elasticsearch
     elastic_port: 9020
