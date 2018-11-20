@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block container %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+
+                        {{ include('include/_category_menu.html.twig', {arrayTree : categories}) }}
+
+                        {{ include('include/_brand_menu.html.twig', {brands : brands}) }}
+
+                    </div>
+                </div>
+
+                <div class="col-sm-9">
+
+                    {% block body %}
+
+                        {{ include('include/_catalog.html.twig', {categoryName: 'Результаты поиска', products: products}) }}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

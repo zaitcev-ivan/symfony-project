@@ -1,0 +1,5 @@
+{{ form_start(searchForm, {'action': path('search_query')}) }}
+    <div class="search_box pull-right">
+        {{ form_widget(searchForm.query) }}
+    </div>
+{{ form_end(searchForm) }}

@@ -3,6 +3,8 @@
 namespace AppBundle\Service;
 
 use AppBundle\Component\ElasticSearchSettings;
+use AppBundle\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Elasticsearch\ClientBuilder;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Value;
@@ -10,14 +12,20 @@ use AppBundle\Entity\Value;
 class SearchService
 {
     private $client;
+    private $productRepository;
 
     /**
      * SearchService constructor.
      * @param ElasticSearchSettings $settings
      */
-    public function __construct(ElasticSearchSettings $settings)
+    public function __construct
+    (
+        ElasticSearchSettings $settings,
+        EntityManagerInterface $em
+    )
     {
         $this->client = ClientBuilder::create()->setHosts([$settings->getHost() . ':' . $settings->getPort()])->build();
+        $this->productRepository = $em->getRepository('AppBundle:Product');
     }
 
     /**
@@ -73,5 +81,35 @@ class SearchService
                 ],
             ],
         ]);
+    }
+
+    /**
+     * @param $query
+     * @return Product[]|null
+     */
+    public function search($query): array
+    {
+        $response = $this->client->search([
+            'index' => 'app',
+            'type' => 'products',
+            'body' => [
+                '_source' => ['id'],
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            'multi_match' => [
+                                'query' => $query['query'],
+                                'fields' => [ 'name', 'code' ],
+                            ]
+                        ]
+                    ],
+                ],
+            ],
+        ]);
+        
+        
+        $ids = array_column($response['hits']['hits'], '_id'); 
+        
+        return $this->productRepository->findBy(['id' => $ids]);
     }
 }
