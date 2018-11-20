@@ -4,3 +4,8 @@ AppBundle\Entity\User:
     plainPassword: password
     createdAt: <dateTimeBetween('2018-01-01', '2018-04-28')>
     roles: ['ROLE_USER']
+  user:
+    email: 'admin@mail.ru'
+    plainPassword: 'qwerty'
+    createdAt: <dateTime('2018-01-01')>
+    roles: ['ROLE_ADMIN']
