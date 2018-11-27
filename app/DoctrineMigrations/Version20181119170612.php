@@ -28,7 +28,7 @@ final class Version20181119170612 extends AbstractMigration implements Container
     public function setContainer(ContainerInterface $container = null)
     {
         if ($container) {
-            $settings = $container->get('app.elastic_search_settings');
+            $settings = $container->get('app.component.elastic_search_settings');
             $this->client = ClientBuilder::create()->setHosts([$settings->getHost() . ':' . $settings->getPort()])->build();
         }
         else {

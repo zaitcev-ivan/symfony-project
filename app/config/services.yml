@@ -6,6 +6,9 @@ parameters:
 services:
     # default configuration for services in *this* file
     _defaults:
+        bind:
+          $host: '%elastic_host%'
+          $port: '%elastic_port%'
         # automatically injects dependencies in your services
         autowire: true
         # automatically registers your services as commands, event subscribers, etc.
@@ -76,11 +79,9 @@ services:
       class: AppBundle\Service\CartService
       public: true
     
-    AppBundle\Component\ElasticSearchSettings:
+    app.component.elastic_search_settings:
       public: true
-      arguments:
-        $host: '%elastic_host%'
-        $port: '%elastic_port%'
+      class: AppBundle\Component\ElasticSearchSettings
     
     AppBundle\Service\SearchService:
       arguments: 
