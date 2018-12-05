@@ -38,11 +38,6 @@ final class Version20181119170612 extends AbstractMigration implements Container
 
     public function up(Schema $schema) : void
     {
-        try {
-            $this->client->indices()->delete([
-                'index' => 'app'
-            ]);
-        } catch (Missing404Exception $e) {}
 
         $this->client->indices()->create([
             'index' => 'app',
